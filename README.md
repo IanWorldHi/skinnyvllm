@@ -14,8 +14,14 @@ nsys profile -t cuda --stats=true ./exec
 - cudaDeviceSyncrhonize: host blockign till gpu time, basically gpu time
 - cudaMallocManaged: roughly cpu time
 
-
-
+Execution Configuration: 
+<<<x, y:num of threads in thread block>>> syntax
+y: blocks of threads are multiples of 32
+<<<1, 256>>>
+would run the computation once per thread
+Modifying kernel:
+threadIndex.x gives index of current thread within its block
+blockDim.x contains number of threads in the block
 
 
 

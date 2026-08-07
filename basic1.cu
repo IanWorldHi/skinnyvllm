@@ -23,7 +23,7 @@ int main() {
         y[i] = 2.0f;
     }
 
-    add<<<1, 1>>>(N, sum, x, y);
+    add<<<1, 256>>>(N, sum, x, y);
 
     cudaDeviceSynchronize();
 
