@@ -4,8 +4,10 @@
 
 
 __global__ void add(int n, float *sum, float *x, float *y) {
-    int index = threadIdx.x;
-    int stride = blockDim.x;
+    //int index = threadIdx.x;
+    int index = blockIdx.x*blockDim.x + threadIdx.x;
+    //int stride = blockDim.x;
+    int stride = blockDim.x*gridDim.x;
     for(int i = index; i<n; i+=stride){
         sum[i] = x[i] + y[i];
     }
@@ -31,7 +33,12 @@ int main() {
         y[i] = 2.0f;
     }
 
-    add<<<1, 256>>>(N, sum, x, y);
+    int blockSize = 256;
+    int numBlocks = (N + blockSize - 1)/blockSize; //rounding up
+
+    //add<<<1, 256>>>(N, sum, x, y);
+    add<<<numBlocks, 256>>>(N, sum, x, y);
+
 
     cudaDeviceSynchronize();
 
