@@ -36,6 +36,13 @@ int main() {
     int blockSize = 256;
     int numBlocks = (N + blockSize - 1)/blockSize; //rounding up
 
+    //prefetching
+    cudaMemLocation loc{};
+    loc.type = cudaMemLocationTypeDevice;
+    loc.id = 0;
+    cudaMemPrefetchAsync(x, N*sizeof(float), loc, 0, 0);
+    cudaMemPrefetchAsync(y, N*sizeof(float), loc, 0, 0);
+
     //add<<<1, 256>>>(N, sum, x, y);
     add<<<numBlocks, 256>>>(N, sum, x, y);
 

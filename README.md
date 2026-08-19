@@ -24,7 +24,11 @@ threadIndex.x gives index of current thread within its block
 blockDim.x contains number of threads in the block
 
 
-
+basic1.cu: Runtime analysis
+single thread: 
+single block:
+multi block:
++prefetching: 797,521 ns
 
 
 
