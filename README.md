@@ -4,6 +4,8 @@
 
 Reading through Programming Massively Parallel Processors 4th-5th ed
 - prob should change the git proj name
+- 4th is a bit oudated, ie) cudaMemPrefetchAsync
+- is cuda now fully C++? or at least not C?
 
 Safetenors format:
 header size (8 bytes unsigned)
@@ -48,7 +50,8 @@ for cudaMalloc, do I have to cast the pointer to void (generic pointer)? it retu
 Oh cudamalloc vs cudamallocmanaged?
 What does kernel mean outside of this context, ie a linux kernel? 
 oh shoot i think codamemcpy was cahnged pretty recently, 4th ed was pretty recent
-
+I wonder what the average salary in china is, vs what the higher end gov managerial ones are and what the avg living cost is
+Wait can I call malloc on the same thing twice
 
 
 Explained later:

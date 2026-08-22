@@ -2,69 +2,36 @@
 #include <iostream>
 #include <math.h>
 
+//Inefficent but conceptual overview again of vector addition on gpu
 
-__global__ void add(int n, float *sum, float *x, float *y) {
-    int size = n*sizeof(float);
-    float *x_d, *y_x, *sum_d;
+#define ERROR_CUDA_EXAMPLE(...) {fprintf()}
+
+__global__ void add(int n, float *A_h, float *B_h, float *C_h) {
+    int size = n * sizeof(float);
+    float *A_d, *B_d, *C_d;
+
     
-
-
-    //int index = threadIdx.x;
-    int index = blockIdx.x*blockDim.x + threadIdx.x;
-    //int stride = blockDim.x;
-    int stride = blockDim.x*gridDim.x;
-    for(int i = index; i<n; i+=stride){
-        sum[i] = x[i] + y[i];
+    cudaError_t err = cudaMalloc((void **) &A_d, size);
+    if(error!=cudaSuccess){
+        printf("%s in %s on line %d\n", cudaGetErrorString(err), __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
     }
-    //each thread starts at a different index, then skips by the number of threads, effectively splitting the work
-    //ie start at i = 6, skip to i = 6 + stride
 
-    /* for(int i = 0; i<n; i++){
-        sum[i] = x[i] + y[i];
-    } */
+    cudaMalloc((void **) &A_d, size);
+    cudaMalloc((void **) &B_d, size);
+    cudaMalloc((void **) &C_d, size);
+
+    cudaMemcpy(A_d, A_h, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(B_d, B_h, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(C_h, C_d, size, cudaMemcpyDeviceToHost);
+    
+    cudaFree(A_d);
+    cudaFree(B_d);
+    cudaFree(C_d);
 }
 
 int main() {
-    printf("Hello, World!\n");
-
-    int N = 1<<20; //2 to the 20th bitshift
-    float *x, *y, *sum;
-    cudaMallocManaged(&x, N*sizeof(float));
-    cudaMallocManaged(&y, N*sizeof(float));
-    cudaMallocManaged(&sum, N*sizeof(float));
-
-    for(int i = 0; i<N; i++){
-        x[i] = 1.0f;
-        y[i] = 2.0f;
-    }
-
-    int blockSize = 256;
-    int numBlocks = (N + blockSize - 1)/blockSize; //rounding up
-
-    //prefetching
-    cudaMemLocation loc{};
-    loc.type = cudaMemLocationTypeDevice;
-    loc.id = 0;
-    cudaMemPrefetchAsync(x, N*sizeof(float), loc, 0, 0);
-    cudaMemPrefetchAsync(y, N*sizeof(float), loc, 0, 0);
-
-    //add<<<1, 256>>>(N, sum, x, y);
-    add<<<numBlocks, 256>>>(N, sum, x, y);
-
-
-    cudaDeviceSynchronize();
-
-    float maxError = 0.0f;
-    for(int i = 0; i<N; i++){
-        maxError = fmax(maxError, fabs(sum[i]-3.0f));
-    }
-    std::cout << "Max error: " << maxError << std::endl;
-
-    cudaFree(x);
-    cudaFree(y);
-    cudaFree(sum);
-
-    return 0;
+    
 }
 
 
