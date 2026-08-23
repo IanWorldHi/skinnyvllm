@@ -18,6 +18,8 @@ __global__ void add(int n, float *sum, float *x, float *y) {
     /* for(int i = 0; i<n; i++){
         sum[i] = x[i] + y[i];
     } */
+
+    //can i run return?
 }
 
 int main() {
@@ -35,7 +37,7 @@ int main() {
     }
 
     int blockSize = 256;
-    int numBlocks = (N + blockSize - 1)/blockSize; //rounding up
+    int numBlocks = (N + blockSize - 1)/blockSize; //rounding up, or just ceil()
 
     //prefetching
     //cudaMemLocation loc{};
@@ -45,9 +47,9 @@ int main() {
     cudaMemPrefetchAsync(x, N*sizeof(float), loc, 0, 0);
     cudaMemPrefetchAsync(y, N*sizeof(float), loc, 0, 0);
 
-    //add<<<1, 256>>>(N, sum, x, y);
+    //add<<<1, 256>>>(N, sum, x, y);, execution configuration parameters
     add<<<numBlocks, 256>>>(N, sum, x, y);
-
+    //is this inefficent? does it copy x and y back as well when not needed
 
     cudaDeviceSynchronize();
 

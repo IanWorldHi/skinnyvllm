@@ -40,7 +40,6 @@ multi block: 690,129
 
 
 Questions for wifi:
-Why is it called serial code for CPU serial code? 
 Clock cycle
 Thread generation and scheduling
 What does it mean by a thread is sequential? shouldn't it be by default, isn't that the only option?
