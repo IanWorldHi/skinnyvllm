@@ -42,15 +42,11 @@ multi block: 690,129
 Questions for wifi:
 Clock cycle
 Thread generation and scheduling
-What does it mean by a thread is sequential? shouldn't it be by default, isn't that the only option?
 How does the CUDA underlying library launch a grid of threads, (i'm assuming this is difficult to implement?)
-Dynamic random access memory? In terms of hardware whare are the diff types of memory and their use ie like vram dram as well
-for cudaMalloc, do I have to cast the pointer to void (generic pointer)? it returns a generic obj?
-Oh cudamalloc vs cudamallocmanaged?
-What does kernel mean outside of this context, ie a linux kernel? 
+Dynamic random access memory? In terms of hardware whare are the diff types of memory and their use ie like vram dram as well 
 oh shoot i think codamemcpy was cahnged pretty recently, 4th ed was pretty recent
-I wonder what the average salary in china is, vs what the higher end gov managerial ones are and what the avg living cost is
-Wait can I call malloc on the same thing twice
+
+
 
 
 Explained later:
