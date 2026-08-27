@@ -12,6 +12,10 @@ __global__ void add2(float* A, float* B, float* C, int n){
         C[i] = A[i] + B[i];
     }
 }
+__global__ void colorToGrayscaleConversion(){}
+
+__global__ void matricMultiplication(){}
+
 
 
 void add(int n, float *A_h, float *B_h, float *C_h) {
