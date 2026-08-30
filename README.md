@@ -59,7 +59,8 @@ What is a core in relation to the number of threads/warsp/breakdown of blocks?
 Processing unit (ALU, register file) in von neumann model?
 Pascal architecture again?
 For conditional divergence, how/why do the threads reconverge after the conditional? Are they barrier synchronzied? Can they not run in parallel? Something to do with independent thread scheduling?
-
+    Or is it that independent thread scheduling largely mitages the conditional divergence loss of runtime?
+(Unrelated) Can you mute a desktop app windwos? 
 
 
 
