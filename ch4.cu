@@ -10,6 +10,9 @@ int main(){
     cudaGetDeviceProperties(&deviceProp, 0);
 
     cout << deviceCount << endl;
+    cout << deviceProp.multiProcessorCount << " " << deviceProp.maxThreadsPerBlock << endl;
+    //cout << deviceProp.clockRate << " " << deviceProp.maxThreadsDim[0] << endl;
+    //clock rate motived to cudaDeviceAttr instead of cudaDeviceProp?
 }
 
 

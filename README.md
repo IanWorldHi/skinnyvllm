@@ -40,12 +40,12 @@ multi block: 690,129
 
 
 Questions for wifi:
-Clock cycle
+Clock cycle/Clock Rate
 Thread generation and scheduling
 How does the CUDA underlying library launch a grid of threads, (i'm assuming this is difficult to implement?)
 Dynamic random access memory? In terms of hardware whare are the diff types of memory and their use ie like vram dram as well 
 oh shoot i think codamemcpy was cahnged pretty recently, 4th ed was pretty recent
-
+Does buying it+the ebook give me the answer sheet to the exercises as well?
 
 
 
@@ -60,13 +60,24 @@ Processing unit (ALU, register file) in von neumann model?
 Pascal architecture again?
 For conditional divergence, how/why do the threads reconverge after the conditional? Are they barrier synchronzied? Can they not run in parallel? Something to do with independent thread scheduling?
     Or is it that independent thread scheduling largely mitages the conditional divergence loss of runtime?
-(Unrelated) Can you mute a desktop app windwos? 
-For resource partitioning and occupency, how come SMs can have different number of blocks but are also limited in blocks? Isn't a block just an efficent encapsulation for threads?
+        wtf is it? "Threads in a warp are
+        executed following the SIMD model. If threads in the same warp diverge by taking dif-
+        ferent execution paths, the processing block executes these paths in passes in which
+        each thread is active only in the pass corresponding to the path that it takes."
+        (Unrelated) Can you mute a desktop app windwos? 
+        For resource partitioning and occupency, how come SMs can have different number of blocks but are also limited in blocks? Isn't a block just an efficent encapsulation for threads?
 Dynamic partitioning registers of an SM?
+Chapter 5, what is shared memory in conjunction to registers and being on-chip? Is it just global memory?
+
+
 
 CUDA C Programming Guide???
 
 
+
+My device:
+SMs: 26
+MaxThreadsPerBlock: 1024
 
 
 
