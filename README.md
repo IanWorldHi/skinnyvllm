@@ -66,8 +66,16 @@ For conditional divergence, how/why do the threads reconverge after the conditio
         each thread is active only in the pass corresponding to the path that it takes."
         (Unrelated) Can you mute a desktop app windwos? 
         For resource partitioning and occupency, how come SMs can have different number of blocks but are also limited in blocks? Isn't a block just an efficent encapsulation for threads?
-Dynamic partitioning registers of an SM?
+Dynamic partitioning registers of an SM? For blocks as well as for registers per thread? How does the maximum limit work then if it is dynamic?
 Chapter 5, what is shared memory in conjunction to registers and being on-chip? Is it just global memory?
+Figure 5.2, what type of CUDA memory is not included in the textbook that is important???? Why would I not be learning it?
+Where does the processor chip fit into the whole thing?
+What is an automatic variable? Why is it different if it is an array?
+How efficent is constnat memory in comparision? Also what is caching, how does it work hardwarewise in comparision to plain memory access?
+How does the alg determine what is frequently accessed for global memory to be loaded into shared memory without adding additionaly unnecessarily burden/computation?
+Atomic operations?
+Do you have to use pointers to gain access to global memory?
+
 
 
 
