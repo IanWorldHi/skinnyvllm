@@ -61,7 +61,10 @@ Pascal architecture again?
 For conditional divergence, how/why do the threads reconverge after the conditional? Are they barrier synchronzied? Can they not run in parallel? Something to do with independent thread scheduling?
     Or is it that independent thread scheduling largely mitages the conditional divergence loss of runtime?
 (Unrelated) Can you mute a desktop app windwos? 
+For resource partitioning and occupency, how come SMs can have different number of blocks but are also limited in blocks? Isn't a block just an efficent encapsulation for threads?
+Dynamic partitioning registers of an SM?
 
+CUDA C Programming Guide???
 
 
 
