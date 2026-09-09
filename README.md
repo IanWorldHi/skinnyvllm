@@ -52,6 +52,7 @@ Does buying it+the ebook give me the answer sheet to the exercises as well?
 Explained later:
 Global memeory? it's called that for device
 Clarification on DRAM, HBM, HBM2 and their specifics (check if I have redundent references in my notes)
+
 What is considered as execution resource?
 Does executing an application slowly take less power over the time taken to execute it? (notes under Transparent Scalability)
 What is coined as an execution unit?
