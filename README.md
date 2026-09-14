@@ -78,7 +78,7 @@ Do you have to use pointers to gain access to global memory?
 
 
 
-
+Need to check if there are programming samples/guidance in teh textbook so far not a lot
 CUDA C Programming Guide???
 
 
