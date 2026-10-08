@@ -9,6 +9,8 @@ __global__ void matricMulKernel(float* N, float* M, float* P, int width){
     __shared__ float Nds[TILEWIDTH][TILEWIDTH];
     int row = blockIdx.y * TILEWIDTH + threadIdx.y;
     int col = blockIdx.x * TILEWIDTH + threadIdx.x;
+    //can make like tx = threadIdx.x as a "automatic scalar var (per thread)"
+    //just more concise, i dont think big impact on performance
     
     float Pvalue = 0;
     for(int i = 0; i < width/TILEWIDTH; i++){
@@ -50,7 +52,6 @@ int main(){
 
     cudaMemcpy(h_P, d_P, bytes, cudaMemcpyDeviceToHost);
 
-    // expected value for every element: width * 1.0 * 2.0
     float expected = width * 2.0f;
     bool ok = true;
     for (int i = 0; i < width * width; i++) {
@@ -71,6 +72,15 @@ int main(){
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
 
 
 
