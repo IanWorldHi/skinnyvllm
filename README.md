@@ -1,4 +1,5 @@
 # skinnyvllm + ml CUDA learning
+skinnyvllm notes in it's folder
 
 ## Notes:
 
@@ -6,11 +7,6 @@ Reading through Programming Massively Parallel Processors 4th-5th ed
 - prob should change the git proj name
 - 4th is a bit oudated, ie) cudaMemPrefetchAsync
 - is cuda now fully C++? or at least not C?
-
-Safetenors format:
-header size (8 bytes unsigned)
-header
-tensors data
 
 Compile with nvcc 
 NSight Systems CLI: Can use to profile it (find runtime)
