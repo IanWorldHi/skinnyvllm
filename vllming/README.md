@@ -4,12 +4,12 @@ Weights are in B16 Format
 llm architecture article: https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison
 
 
-# Safetenors format:
+### Safetenors format:
 header size (8 bytes unsigned)
 header
 tensors data
 
-# Dump of Hugging Face Transformers LlamaForCasualLm Obj (the -> text one)
+### Dump of Hugging Face Transformers LlamaForCasualLm Obj (the -> text one)
 LlamaForCausalLM(
   (model): LlamaModel(
     (embed_tokens): Embedding(128256, 2048)
@@ -36,6 +36,11 @@ LlamaForCausalLM(
   )
   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
 )
+
+
+### bfloat16
+
+
 
 
 
