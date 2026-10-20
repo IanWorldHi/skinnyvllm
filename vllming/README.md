@@ -40,6 +40,8 @@ LlamaForCausalLM(
 
 ### bfloat16
 
+### implementation
+using nlohmann json (json for modern c+)
 
 
 
