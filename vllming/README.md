@@ -42,6 +42,7 @@ LlamaForCausalLM(
 
 ### implementation
 using nlohmann json (json for modern c+) 3.12.0
+Using ai generated build script for now
 
 
 

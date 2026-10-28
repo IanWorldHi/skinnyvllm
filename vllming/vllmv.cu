@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include <fstream>
+#include <inttypes.h> //for uint64_t, gives PRIu64 macro for printing uint64_t
 
 #include <cuda_runtime.h>
 #include <cublas_v2.h>
@@ -37,19 +38,34 @@ int checkGPUStatus(){
     return 0;
 }
 
-int loadWeights(int& addr){
+//int loadWeightsSafetensors(int& addr){
+int loadWeightsSafetensors(){
+
     std::ifstream f("../model.safetensors", std::ios::binary);
     if (!f.is_open()) {
         std::cerr << "Failed to open file: model.safetensors" << std::endl;
         return 1;
     }
+    //header
     uint64_t header_size;
     f.read(reinterpret_cast<char*>(&header_size), sizeof(header_size));
     std::string header;
+    header.resize(header_size);
+    f.read(&header[0], header_size); 
+    json header_json = json::parse(header);
+    
+    printf("Header size: %" PRIu64 "\n", header_size);
+    std::cout << "Header JSON: " << header_json.dump(4) << std::endl;
+
+    //weights
+
+    return 0;
 }
 
 int main(){
-    checkGPUStatus();
+    loadWeightsSafetensors();
+
+    
 }
 
 
