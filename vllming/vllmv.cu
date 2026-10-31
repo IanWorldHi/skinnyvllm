@@ -53,11 +53,18 @@ int loadWeightsSafetensors(){
     header.resize(header_size);
     f.read(&header[0], header_size); 
     json header_json = json::parse(header);
-    
-    printf("Header size: %" PRIu64 "\n", header_size);
-    std::cout << "Header JSON: " << header_json.dump(4) << std::endl;
 
-    //weights
+    //weights - figuring out the layers (of tensors?)
+    //alt ordered_json
+    std::map<std::string, std::pair<uint64_t, uint64_t>> tensor_map;
+    uint64_t end_offset = 0;
+    for(auto &[key, value]: header_json.items()){
+        if(key == "__metadata__") continue;
+        tensor_map[key] = {value["data_offsets"].at(0).get<uint64_t>(), value["data_offsets"].at(1).get<uint64_t>()};
+        if(end_offset < value["data_offsets"].at(1).get<uint64_t>()){
+            end_offset = value["data_offsets"].at(1).get<uint64_t>();
+        }
+    }
 
     return 0;
 }
