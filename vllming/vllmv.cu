@@ -41,17 +41,17 @@ int checkGPUStatus(){
 //int loadWeightsSafetensors(int& addr){
 int loadWeightsSafetensors(){
 
-    std::ifstream f("../model.safetensors", std::ios::binary);
-    if (!f.is_open()) {
+    std::ifstream fileModel("../model.safetensors", std::ios::binary);
+    if (!fileModel.is_open()) {
         std::cerr << "Failed to open file: model.safetensors" << std::endl;
         return 1;
     }
     //header
     uint64_t header_size;
-    f.read(reinterpret_cast<char*>(&header_size), sizeof(header_size));
+    fileModel.read(reinterpret_cast<char*>(&header_size), sizeof(header_size));
     std::string header;
     header.resize(header_size);
-    f.read(&header[0], header_size); 
+    fileModel.read(&header[0], header_size); 
     json header_json = json::parse(header);
 
     //weights - figuring out the layers (of tensors?)
@@ -71,7 +71,7 @@ int loadWeightsSafetensors(){
     cudaMalloc(&weights_device, end_offset);
     
     char *weights_host = (char*)malloc(end_offset);
-    f.read(reinterpret_cast<char*>(weights_host), end_offset);
+    fileModel.read(reinterpret_cast<char*>(weights_host), end_offset);
 
     cudaMemcpy(weights_device, weights_host, end_offset, cudaMemcpyHostToDevice);
 
