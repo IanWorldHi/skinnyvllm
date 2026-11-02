@@ -56,6 +56,7 @@ int loadWeightsSafetensors(){
 
     //weights - figuring out the layers (of tensors?)
     //alt ordered_json
+    //unordered map? diff?
     std::map<std::string, std::pair<uint64_t, uint64_t>> tensor_map;
     uint64_t end_offset = 0;
     for(auto &[key, value]: header_json.items()){
@@ -65,6 +66,14 @@ int loadWeightsSafetensors(){
             end_offset = value["data_offsets"].at(1).get<uint64_t>();
         }
     }
+
+    char *weights_device;
+    cudaMalloc(&weights_device, end_offset);
+    
+    char *weights_host = (char*)malloc(end_offset);
+    f.read(reinterpret_cast<char*>(weights_host), end_offset);
+
+    cudaMemcpy(weights_device, weights_host, end_offset, cudaMemcpyHostToDevice);
 
     return 0;
 }
