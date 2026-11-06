@@ -15,7 +15,7 @@ using json = nlohmann::json;
 
 constexpr size_t B_TO_MB = 1024ull * 1024;
 constexpr size_t B_TO_GB = 1024ull * 1024 * 1024;
-
+constexpr int NUM_LAYERS = 16;
 
 int checkGPUStatus(){
     int device_count = 0;
@@ -37,6 +37,23 @@ int checkGPUStatus(){
     std::cout << "Free memory: " << free_mem / B_TO_GB << "GB, total memory: " << total_mem / B_TO_GB << "GB\n";
     return 0;
 }
+
+
+struct weights{
+    //all weights below
+    __nv_bfloat16 *embeded_tokens;
+    __nv_bfloat16 *input_layernorm[NUM_LAYERS];
+    __nv_bfloat16 *mlp_down_proj[NUM_LAYERS];
+    __nv_bfloat16 *mlp_gate_proj[NUM_LAYERS];
+    __nv_bfloat16 *mlp_up_proj[NUM_LAYERS];
+    __nv_bfloat16 *post_attn_layernorm[NUM_LAYERS];
+    __nv_bfloat16 *self_attn_k_proj[NUM_LAYERS];
+    __nv_bfloat16 *self_attn_o_proj[NUM_LAYERS];
+    __nv_bfloat16 *self_attn_q_proj[NUM_LAYERS];
+    __nv_bfloat16 *self_attn_v_proj[NUM_LAYERS];
+    __nv_bfloat16 *norm;
+};
+
 
 //int loadWeightsSafetensors(int& addr){
 int loadWeightsSafetensors(){
