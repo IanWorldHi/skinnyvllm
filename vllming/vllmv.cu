@@ -17,29 +17,10 @@ constexpr size_t B_TO_MB = 1024ull * 1024;
 constexpr size_t B_TO_GB = 1024ull * 1024 * 1024;
 constexpr int NUM_LAYERS = 16;
 
-int checkGPUStatus(){
-    int device_count = 0;
-    cudaGetDeviceCount(&device_count);
-    if (device_count == 0){
-        std::cerr << "No CUDA devices found\n";
-        return 1;
-    }
-    cudaDeviceProp prop;
-    cudaGetDeviceProperties(&prop, 0);
-    std::cout << "Device: " << prop.name << "\n";
-    std::cout << "Compute capability: " << prop.major << "." << prop.minor << "\n";
-    std::cout << "Global memory: " << prop.totalGlobalMem / B_TO_MB << " MB\n";
-    std::cout << "SM count: " << prop.multiProcessorCount << "\n";
-    std::cout << "Max threads per block: " << prop.maxThreadsPerBlock << std::endl;
-    size_t free_mem;
-    size_t total_mem;
-    cudaMemGetInfo(&free_mem, &total_mem);
-    std::cout << "Free memory: " << free_mem / B_TO_GB << "GB, total memory: " << total_mem / B_TO_GB << "GB\n";
-    return 0;
-}
 
 
-struct weights{
+//hard coded for the model rn
+struct Weights{
     //all weights below
     __nv_bfloat16 *embeded_tokens;
     __nv_bfloat16 *input_layernorm[NUM_LAYERS];
@@ -56,8 +37,7 @@ struct weights{
 
 
 //int loadWeightsSafetensors(int& addr){
-int loadWeightsSafetensors(){
-
+int loadWeightsSafetensors(Weights* weights){
     std::ifstream fileModel("../model.safetensors", std::ios::binary);
     if (!fileModel.is_open()) {
         std::cerr << "Failed to open file: model.safetensors" << std::endl;
@@ -86,17 +66,23 @@ int loadWeightsSafetensors(){
 
     char *weights_device;
     cudaMalloc(&weights_device, end_offset);
-    
     char *weights_host = (char*)malloc(end_offset);
     fileModel.read(reinterpret_cast<char*>(weights_host), end_offset);
-
     cudaMemcpy(weights_device, weights_host, end_offset, cudaMemcpyHostToDevice);
 
-    return 0;
+    weights->embeded_tokens = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.embed_tokens.weight"].first);
+    
+
+
+    return 1;
 }
 
+
+
 int main(){
-    loadWeightsSafetensors();
+    Weights* weights = new Weights;
+    //Weights weights{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    loadWeightsSafetensors(weights);
 
     
 }
