@@ -13,8 +13,8 @@
 using json = nlohmann::json;
 
 
-constexpr size_t B_TO_MB = 1024ull * 1024;
-constexpr size_t B_TO_GB = 1024ull * 1024 * 1024;
+//constexpr size_t B_TO_MB = 1024ull * 1024;
+//constexpr size_t B_TO_GB = 1024ull * 1024 * 1024;
 constexpr int NUM_LAYERS = 16;
 
 
@@ -71,19 +71,35 @@ int loadWeightsSafetensors(Weights* weights){
     cudaMemcpy(weights_device, weights_host, end_offset, cudaMemcpyHostToDevice);
 
     weights->embeded_tokens = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.embed_tokens.weight"].first);
+    weights->norm = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.norm.weight"].first);
+    for(int i = 0; i<NUM_LAYERS; i++){
+        weights->input_layernorm[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".input_layernorm.weight"].first);
+        weights->mlp_down_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".mlp.down_proj.weight"].first);
+        weights->mlp_gate_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".mlp.gate_proj.weight"].first);
+        weights->mlp_up_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".mlp.up_proj.weight"].first);
+        weights->post_attn_layernorm[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".post_attention_layernorm.weight"].first);
+        weights->self_attn_k_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.k_proj.weight"].first);
+        weights->self_attn_o_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.o_proj.weight"].first);
+        weights->self_attn_q_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.q_proj.weight"].first);
+        weights->self_attn_v_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.v_proj.weight"].first);
+    }
     
-
-
-    return 1;
+    return 0;
 }
+
+
 
 
 
 int main(){
     Weights* weights = new Weights;
     //Weights weights{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    loadWeightsSafetensors(weights);
+    if(loadWeightsSafetensors(weights) != 0){
+        std::cerr << "Failed to load weights" << std::endl;
+        return 1;
+    }
 
+    
     
 }
 
