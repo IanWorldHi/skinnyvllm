@@ -87,8 +87,9 @@ int loadWeightsSafetensors(Weights* weights){
     return 0;
 }
 
-
-
+__global__ void embeddings(){
+    
+}
 
 
 int main(){
@@ -99,7 +100,7 @@ int main(){
         return 1;
     }
 
-    
+
     
 }
 

@@ -9,3 +9,10 @@ executables/
 *.safetensors
 /venv
 
+
+/pythHug/tokenizer.py
+#using copied script for now maybe
+
+
+
+
