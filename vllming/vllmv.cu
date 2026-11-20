@@ -78,12 +78,13 @@ int loadWeightsSafetensors(Weights* weights){
         weights->mlp_gate_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".mlp.gate_proj.weight"].first);
         weights->mlp_up_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".mlp.up_proj.weight"].first);
         weights->post_attn_layernorm[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".post_attention_layernorm.weight"].first);
-        weights->self_attn_k_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.k_proj.weight"].first);
-        weights->self_attn_o_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.o_proj.weight"].first);
-        weights->self_attn_q_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.q_proj.weight"].first);
-        weights->self_attn_v_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attention.v_proj.weight"].first);
+        weights->self_attn_k_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attn.k_proj.weight"].first);
+        weights->self_attn_o_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attn.o_proj.weight"].first);
+        weights->self_attn_q_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attn.q_proj.weight"].first);
+        weights->self_attn_v_proj[i] = (__nv_bfloat16*)((char*)weights_device + tensor_map["model.layers." + std::to_string(i) + ".self_attn.v_proj.weight"].first);
     }
     
+    free(weights_host);
     return 0;
 }
 
@@ -99,7 +100,7 @@ int main(){
         std::cerr << "Failed to load weights" << std::endl;
         return 1;
     }
-
+    free(weights);
 
     
 }
