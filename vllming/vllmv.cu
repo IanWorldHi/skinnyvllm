@@ -105,8 +105,6 @@ int main(){
         return 1;
     }
 
-    // ...use the weights here...
-
     cudaFree(weights->base);
     delete weights;
 
