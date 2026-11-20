@@ -1,5 +1,7 @@
 # SkinnyVllm notes
 Link to model: https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct
+wrong one i use not instruct
+
 Weights are in B16 Format
 llm architecture article: https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison
 
