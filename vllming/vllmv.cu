@@ -21,7 +21,7 @@ constexpr int NUM_LAYERS = 16;
 
 //hard coded for the model rn
 struct Weights{
-    //all weights below
+    char *base;
     __nv_bfloat16 *embeded_tokens;
     __nv_bfloat16 *input_layernorm[NUM_LAYERS];
     __nv_bfloat16 *mlp_down_proj[NUM_LAYERS];
@@ -59,6 +59,7 @@ int loadWeightsSafetensors(Weights* weights){
     for(auto &[key, value]: header_json.items()){
         if(key == "__metadata__") continue;
         tensor_map[key] = {value["data_offsets"].at(0).get<uint64_t>(), value["data_offsets"].at(1).get<uint64_t>()};
+        //fix to ()?
         if(end_offset < value["data_offsets"].at(1).get<uint64_t>()){
             end_offset = value["data_offsets"].at(1).get<uint64_t>();
         }
@@ -66,6 +67,8 @@ int loadWeightsSafetensors(Weights* weights){
 
     char *weights_device;
     cudaMalloc(&weights_device, end_offset);
+    weights->base = weights_device;
+    //need to error check
     char *weights_host = (char*)malloc(end_offset);
     fileModel.read(reinterpret_cast<char*>(weights_host), end_offset);
     cudaMemcpy(weights_device, weights_host, end_offset, cudaMemcpyHostToDevice);
@@ -98,9 +101,14 @@ int main(){
     //Weights weights{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     if(loadWeightsSafetensors(weights) != 0){
         std::cerr << "Failed to load weights" << std::endl;
+        delete weights;
         return 1;
     }
-    free(weights);
+
+    // ...use the weights here...
+
+    cudaFree(weights->base);
+    delete weights;
 
     
 }
